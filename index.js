@@ -83,7 +83,14 @@ class HueTravis extends BaseModule {
 
     const activeRepos = res.repos.filter(repo => repo.active)
 
-    return Promise.all(activeRepos.map(repo => this.repoReport(repo)))
+    let array = []
+
+    array = array.concat(activeRepos.filter(repo => repo.last_build_state === 'failed'))
+    array = array.concat(activeRepos.filter(repo => ['created', 'started'].includes(repo.last_build_state)))
+    array = array.concat(activeRepos.filter(repo => !['created', 'started', 'passed', 'failed'].includes(repo.last_build_state)))
+    array = array.concat(activeRepos.filter(repo => repo.last_build_state === 'passed'))
+
+    return this.repoReport(array[0])
   }
 
   async repoReport (repo) {

@@ -90,6 +90,11 @@ describe('HueTravis Class', function () {
           active: true,
           last_build_state: 'unstable',
           slug: 'MyRepo'
+        },
+        {
+          active: true,
+          last_build_state: 'passed',
+          slug: 'AnotherRepo'
         }
       ]
     })
@@ -98,6 +103,7 @@ describe('HueTravis Class', function () {
     await huetravis._pollTravis()
 
     expect(travisStub).to.be.calledWith('GET', '/repos/myOrg')
+    expect(changeStub).to.be.calledOnce
     expect(changeStub).to.be.calledWith('warning', 'MyRepo unstable')
 
     travisStub.restore()
@@ -116,6 +122,11 @@ describe('HueTravis Class', function () {
           active: true,
           last_build_state: 'started',
           slug: 'MyRepo'
+        },
+        {
+          active: true,
+          last_build_state: 'passed',
+          slug: 'AnotherRepo'
         }
       ]
     })
@@ -124,6 +135,7 @@ describe('HueTravis Class', function () {
     await huetravis._pollTravis()
 
     expect(travisStub).to.be.calledWith('GET', '/repos/myOrg')
+    expect(changeStub).to.be.calledOnce
     expect(changeStub).to.be.calledWith('working', 'MyRepo Building')
 
     travisStub.restore()
@@ -142,6 +154,11 @@ describe('HueTravis Class', function () {
           active: true,
           last_build_state: 'failed',
           slug: 'MyRepo'
+        },
+        {
+          active: true,
+          last_build_state: 'passed',
+          slug: 'AnotherRepo'
         }
       ]
     })
@@ -150,6 +167,7 @@ describe('HueTravis Class', function () {
     await huetravis._pollTravis()
 
     expect(travisStub).to.be.calledWith('GET', '/repos/myOrg')
+    expect(changeStub).to.be.calledOnce
     expect(changeStub).to.be.calledWith('alert', 'MyRepo Failing')
 
     travisStub.restore()
@@ -168,6 +186,11 @@ describe('HueTravis Class', function () {
           active: true,
           last_build_state: 'passed',
           slug: 'MyRepo'
+        },
+        {
+          active: true,
+          last_build_state: 'passed',
+          slug: 'AnotherRepo'
         }
       ]
     })
@@ -176,6 +199,7 @@ describe('HueTravis Class', function () {
     await huetravis._pollTravis()
 
     expect(travisStub).to.be.calledWith('GET', '/repos/myOrg')
+    expect(changeStub).to.be.calledOnce
     expect(changeStub).to.be.calledWith('ok', 'MyRepo Passing')
 
     travisStub.restore()
