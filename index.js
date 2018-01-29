@@ -8,6 +8,10 @@ try {
 
 const Travis = require('travis-ci')
 
+/**
+ * Module
+ * @extends BaseModule
+ */
 class HueTravis extends BaseModule {
   /**
    * Generate instance name based on repo and repo
@@ -93,6 +97,11 @@ class HueTravis extends BaseModule {
     return this.repoReport(array[0])
   }
 
+  /**
+   * Report the status of a repo to HueStatus
+   * @param  {Object}  repo Travis Repo object
+   * @return {Promise}
+   */
   async repoReport (repo) {
     if (repo.last_build_state === 'failed') {
       return this.change('alert', `${repo.slug} Failing`)
