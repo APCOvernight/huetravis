@@ -10,7 +10,7 @@
     "stryker": "stryker run"
   },
   "dependencies": {
-    "requireg": "^0.1.7",
+    "requireg": "^0.2.2",
     "travis-ci": "^2.1.1"
   },
   "devDependencies": {
